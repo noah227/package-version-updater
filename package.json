@@ -1,6 +1,6 @@
 {
   "name": "package-version-updater",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "更新package.json版本号",
   "bin": {
     "pvu": "bin/index.js"
