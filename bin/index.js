@@ -17,6 +17,7 @@ program
     .option("-M, --major [delta]", "update Major", parseInt)
     .option("-m, --minor [delta]", "update Minor", parseInt)
     .option("-p, --patch [delta]", "update Patch", parseInt)
+    .option("-pr, --pre-release [delta]", "update Pre-Release (alpha/beta/rc/...)", parseInt)
     .option("-ac, --auto-commit", "auto commit package.json if it's a git repo")
     .option("-cp, --commit-prefix [commit-prefix]", "commit prefix", "chore")
     .action((options) => {
