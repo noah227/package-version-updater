@@ -1,23 +1,31 @@
 {
   "name": "package-version-updater",
-  "version": "1.0.5",
+  "version": "1.1.17",
   "description": "更新package.json版本号",
   "bin": {
     "pvu": "bin/index.js"
   },
   "scripts": {
+    "test:help": "node ./bin/index.js --help",
     "test:no-arg": "node ./bin/index.js",
     "test:major": "node ./bin/index.js --major",
     "test:major-delta": "node ./bin/index.js --major 1",
+    "test:minor-delta": "node ./bin/index.js --minor 1",
     "test:patch-delta": "node ./bin/index.js --patch 2",
-    "test:auto-commit": "node ./bin/index.js --auto-commit"
+    "test:auto-commit": "node ./bin/index.js --auto-commit",
+    "test:auto-commit--prefix": "node ./bin/index.js --auto-commit -cp release"
   },
-  "keywords": [],
+  "keywords": [
+    "update",
+    "package.json",
+    "version",
+    "commit"
+  ],
   "files": [
     "bin"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.11.27"
   },
