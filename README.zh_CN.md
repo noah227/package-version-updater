@@ -2,7 +2,7 @@
 
 > 更新package.json版本号
 >
-> 版本号以`Major.Minor.Patch`格式书写
+> 版本号以`Major.Minor.Patch`或者`Major.Minor.Patch-PreRelease.x`格式书写
 
 > [EN](./README.md)
 

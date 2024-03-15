@@ -2,7 +2,8 @@
 
 > Update version of package.json
 >
-> Version written in format `Major.Minor.Patch`
+> Version written in format `Major.Minor.Patch` or `Major.Minor.Patch-PreRelease.x`
+> 
 
 > [中文文档](./README.zh_CN.md)
 
