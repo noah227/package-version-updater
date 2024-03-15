@@ -1,0 +1,26 @@
+{
+  "name": "package-version-updater",
+  "version": "1.0.4",
+  "description": "更新package.json版本号",
+  "bin": {
+    "pvu": "bin/index.js"
+  },
+  "scripts": {
+    "test:no-arg": "node ./bin/index.js",
+    "test:major": "node ./bin/index.js --major",
+    "test:major-delta": "node ./bin/index.js --major 1",
+    "test:patch-delta": "node ./bin/index.js --patch 2"
+  },
+  "keywords": [],
+  "files": [
+    "bin"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.27"
+  },
+  "dependencies": {
+    "commander": "^12.0.0"
+  }
+}
