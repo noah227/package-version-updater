@@ -14,9 +14,11 @@ program
 // 注册支持的命令及执行函数
 program
     .description("update version")
-    .option("-M, --major <delta>", "update Major", "0")
-    .option("-m, --minor <delta>", "update Minor", "0")
-    .option("-p, --patch <delta>", "update Patch", "0")
+    .option("-M, --major [delta]", "update Major", parseInt)
+    .option("-m, --minor [delta]", "update Minor", parseInt)
+    .option("-p, --patch [delta]", "update Patch", parseInt)
+    .option("-ac, --auto-commit", "auto commit package.json if it's a git repo")
+    .option("-cp, --commit-prefix [commit-prefix]", "commit prefix", "chore")
     .action((options) => {
         require("./core")(options)
     })

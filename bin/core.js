@@ -2,7 +2,7 @@ const path = require("path")
 const fs = require("fs")
 /**
  *
- * @param { {major?: String, minor?: String, patch?: String}} options
+ * @param { {major?: string, minor?: string, patch?: string, autoCommit?: boolean, commitPrefix?: string}} options
  */
 module.exports = (options) => {
     console.log(options, 999)
@@ -12,7 +12,7 @@ module.exports = (options) => {
     minor = parseInt(minor)
     patch = parseInt(patch)
 
-    if(!major && !minor && !patch) patch = 1
+    if (!major && !minor && !patch) patch = 1
 
     // 获取cwd及pkg信息
     const cwd = process.cwd()
@@ -35,8 +35,27 @@ module.exports = (options) => {
 
     pkg.version = _version
     // 执行文件操作
-    // fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), {encoding: "utf8"})
+    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), {encoding: "utf8"})
 
     const updateMsg = `Version updated: ${version} -> ${_version}`
     console.log(updateMsg)
+
+    // 处理自动commit
+    if (options.autoCommit) {
+        // 简易的判断
+        if (fs.existsSync(path.resolve(cwd, ".git"))) {
+            const cmd = `git add package.json & git commit -m "${options.commitPrefix}: update version(${version} -> ${_version})"`
+            require("child_process").exec(cmd, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(error)
+                    console.error(stdout)
+                    console.error(stderr)
+                } else {
+                    console.log("Version update@package.json has been automatically committed as you used --auto-commit")
+                }
+            })
+        } else {
+            console.log("It's not a git repository, nothing committed")
+        }
+    }
 }
