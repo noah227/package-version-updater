@@ -27,7 +27,6 @@ const processVersion = ({version}) => {
                 preReleaseCode: _,
                 preReleaseVersion: parseInt(v) || 0
             }
-            const _v = parseInt(v)
         }
     }
 
