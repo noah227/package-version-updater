@@ -4,6 +4,13 @@
 >
 > Version written in format `Major.Minor.Patch`
 
+> [中文文档](./README.zh_CN.md)
+
+## Features
+
+* Update version
+* Auto commit
+
 ## Update Strategy
 
 * If no args specified, version will be processed as `patch+1`, which equals to `pvu --patch 1`
@@ -37,10 +44,6 @@ pvu --patch
 ```
 
 > e.g. 1.2.0 -> 1.2.1
-
-## Features
-
-- auto-commit
 
 ## more
 
