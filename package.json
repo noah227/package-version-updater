@@ -9,7 +9,8 @@
     "test:no-arg": "node ./bin/index.js",
     "test:major": "node ./bin/index.js --major",
     "test:major-delta": "node ./bin/index.js --major 1",
-    "test:patch-delta": "node ./bin/index.js --patch 2"
+    "test:patch-delta": "node ./bin/index.js --patch 2",
+    "test:auto-commit": "node ./bin/index.js --auto-commit"
   },
   "keywords": [],
   "files": [
