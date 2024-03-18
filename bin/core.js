@@ -46,12 +46,13 @@ const processVersion = ({version}) => {
  *      major?: boolean | number, minor?: boolean | number, patch?: boolean | number,
  *      preRelease?: boolean | number,
  *      autoCommit?: boolean, commitPrefix?: string,
+ *      preview?: boolean
  * }} options
  */
 module.exports = (options) => {
-    console.log(options, 999)
+    console.log("Input:", JSON.stringify(options))
     // 处理参数
-    let {major, minor, patch, preRelease} = options
+    let {major, minor, patch, preRelease, preview} = options
     major = processValue(major)
     minor = processValue(minor)
     patch = processValue(patch)
@@ -67,8 +68,6 @@ module.exports = (options) => {
 
     // 处理要升级并更新pkg
     const pkg = require(pkgPath)
-
-    console.log(processVersion(pkg))
 
     let {major: M, minor: m, patch: p, preReleaseCode, preReleaseVersion} = processVersion(pkg)
     if (major) {
@@ -97,9 +96,11 @@ module.exports = (options) => {
             ].join(".")
         }
     }
-    const updateMsg = `Version updated: ${pkg.version} -> ${_version}`
-    console.log(updateMsg)
-
+    let updateMsg = `Version updated: ${pkg.version} -> ${_version}`
+    if(preview) {
+        return console.log("Preview Mode:", updateMsg)
+    }
+    else console.log(updateMsg)
     pkg.version = _version
     // 执行文件操作
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), {encoding: "utf8"})

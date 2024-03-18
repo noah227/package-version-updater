@@ -9,6 +9,7 @@
     "test:help": "node ./bin/index.js --help",
     "test:no-arg": "node ./bin/index.js",
     "test:major": "node ./bin/index.js --major",
+    "test:preview": "node ./bin/index.js --major --preview",
     "test:major-delta": "node ./bin/index.js --major 1",
     "test:minor-delta": "node ./bin/index.js --minor 1",
     "test:patch-delta": "node ./bin/index.js --patch 2",
