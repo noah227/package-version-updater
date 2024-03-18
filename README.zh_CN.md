@@ -3,6 +3,7 @@
 > 更新package.json版本号
 >
 > 版本号以`Major.Minor.Patch`或者`Major.Minor.Patch-PreRelease.x`格式书写
+> 上层版本更新会重置下层版本，如对版本`1.2.1`使用命令`--minor`结果将是`1.3.0`
 
 > [EN](./README.md)
 

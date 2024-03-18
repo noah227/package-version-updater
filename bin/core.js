@@ -2,6 +2,13 @@ const path = require("path")
 const fs = require("fs")
 
 /**
+ *
+ * @param {boolean | number} v
+ */
+const processValue = (v) => {
+    return typeof v === "boolean" ? 1 : v
+}
+/**
  * @param {{version: string, [index: string]: any}} pkg
  */
 const processVersion = ({version}) => {
@@ -19,8 +26,8 @@ const processVersion = ({version}) => {
     // preRelease
     if (vSplit.length > 1) {
         const pvSplit = vSplit[1].split(".")
-        if(pvSplit.length === 1) {}
-        else {
+        if (pvSplit.length === 1) {
+        } else {
             const [_, v] = pvSplit
             ret = {
                 ...ret,
@@ -36,8 +43,8 @@ const processVersion = ({version}) => {
 /**
  *
  * @param { {
- *      major?: string, minor?: string, patch?: string,
- *      preRelease?: string,
+ *      major?: boolean | number, minor?: boolean | number, patch?: boolean | number,
+ *      preRelease?: boolean | number,
  *      autoCommit?: boolean, commitPrefix?: string,
  * }} options
  */
@@ -45,10 +52,10 @@ module.exports = (options) => {
     console.log(options, 999)
     // 处理参数
     let {major, minor, patch, preRelease} = options
-    major = parseInt(major) || 0
-    minor = parseInt(minor) || 0
-    patch = parseInt(patch) || 0
-    preRelease = parseInt(preRelease) || 0
+    major = processValue(major)
+    minor = processValue(minor)
+    patch = processValue(patch)
+    preRelease = processValue(preRelease)
 
 
     if (!major && !minor && !preRelease && !patch) patch = 1
@@ -64,17 +71,30 @@ module.exports = (options) => {
     console.log(processVersion(pkg))
 
     let {major: M, minor: m, patch: p, preReleaseCode, preReleaseVersion} = processVersion(pkg)
-
-    if (major) M += major
-    if (minor) m += minor
+    if (major) {
+        M += major
+        // 重置下级版本
+        m = 0
+        p = 0
+    }
+    if (minor) {
+        m += minor
+        p = 0
+    }
     if (patch) p += patch
 
     let _version = [M, m, p].join(".")
-    if(preRelease) {
-        if(!preReleaseCode) console.warn("No pre-release part (e.g. -alpha.1) found in version")
-        else if(!preReleaseVersion) console.warn("Pre release version does not contain exact number, operation aborted!")
+    if (major || minor || patch) {
+        _version += "-" + [preReleaseCode, 0].join(".")
+
+    } else if (preRelease) {
+        if (!preReleaseCode) console.warn("No pre-release part (e.g. -alpha.1) found in version")
+        else if (!preReleaseVersion) console.warn("Pre release version does not contain exact number, operation aborted!")
         else {
-            _version += "-" + [preReleaseCode, preReleaseVersion + preRelease].join(".")
+            _version += "-" + [
+                preReleaseCode,
+                (major || minor || patch) ? 0 : preReleaseVersion + preRelease
+            ].join(".")
         }
     }
     const updateMsg = `Version updated: ${pkg.version} -> ${_version}`
