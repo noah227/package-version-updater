@@ -2,8 +2,7 @@
 
 > 更新package.json版本号
 >
-> 版本号以`Major.Minor.Patch`或者`Major.Minor.Patch-PreRelease.x`格式书写
-> 上层版本更新会重置下层版本，如对版本`1.2.1`使用命令`--minor`结果将是`1.3.0`
+> 版本号以`Major.Minor.Patch`或者`Major.Minor.Patch-PreRelease.x`格式书写 
 
 > [EN](./README.md)
 
@@ -14,7 +13,8 @@
 
 ## 更新策略
 
-如果没有指定任何参数，默认以`patch+1`进行更新，等同于`pvu --patch 1`
+* 如果没有指定任何参数，默认以`patch+1`进行更新，等同于`pvu --patch 1`
+* 上层版本更新会重置下层版本，如对版本`1.2.1`使用命令`--minor`结果将是`1.3.0`
 
 ## 用法
 
