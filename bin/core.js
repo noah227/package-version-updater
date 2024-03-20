@@ -1,5 +1,6 @@
 const path = require("path")
 const fs = require("fs")
+const versionConverter = require("version-converter")
 
 /**
  *
@@ -12,32 +13,7 @@ const processValue = (v) => {
  * @param {{version: string, [index: string]: any}} pkg
  */
 const processVersion = ({version}) => {
-    // 2.5.1-alpha.3
-    const vSplit = version.split("-")
-    // 正式version的部分
-    const [M, m, p] = vSplit[0].split(".")
-    let ret = {
-        major: parseInt(M),
-        minor: parseInt(m),
-        patch: parseInt(p),
-        preReleaseCode: undefined,
-        preReleaseVersion: undefined,
-    }
-    // preRelease
-    if (vSplit.length > 1) {
-        const pvSplit = vSplit[1].split(".")
-        if (pvSplit.length === 1) {
-        } else {
-            const [_, v] = pvSplit
-            ret = {
-                ...ret,
-                preReleaseCode: _,
-                preReleaseVersion: parseInt(v) || 0
-            }
-        }
-    }
-
-    return ret
+    return versionConverter.split(version)
 }
 
 /**
@@ -68,8 +44,7 @@ module.exports = (options) => {
 
     // 处理要升级并更新pkg
     const pkg = require(pkgPath)
-
-    let {major: M, minor: m, patch: p, preReleaseCode, preReleaseVersion} = processVersion(pkg)
+    let {major: M, minor: m, patch: p, prereleaseCode, prereleaseVersion} = processVersion(pkg)
     if (major) {
         M += major
         // 重置下级版本
@@ -82,25 +57,26 @@ module.exports = (options) => {
     }
     if (patch) p += patch
 
+    // 版本主体部分
     let _version = [M, m, p].join(".")
+    // 重置prerelease
     if (major || minor || patch) {
-        _version += "-" + [preReleaseCode, 0].join(".")
-
-    } else if (preRelease) {
-        if (!preReleaseCode) console.warn("No pre-release part (e.g. -alpha.1) found in version")
-        else if (!preReleaseVersion) console.warn("Pre release version does not contain exact number, operation aborted!")
+        _version += "-" + [prereleaseCode, 0].join(".")
+    }
+    // 处理prerelease
+    else if (preRelease) {
+        if (!prereleaseVersion) console.warn("Pre release version does not contain exact number, operation aborted!")
         else {
             _version += "-" + [
-                preReleaseCode,
-                (major || minor || patch) ? 0 : preReleaseVersion + preRelease
+                prereleaseCode,
+                (major || minor || patch) ? 0 : prereleaseVersion + preRelease
             ].join(".")
         }
     }
     let updateMsg = `Version updated: ${pkg.version} -> ${_version}`
-    if(preview) {
+    if (preview) {
         return console.log("Preview Mode:", updateMsg)
-    }
-    else console.log(updateMsg)
+    } else console.log(updateMsg)
     pkg.version = _version
     // 执行文件操作
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), {encoding: "utf8"})
