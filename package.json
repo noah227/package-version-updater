@@ -1,6 +1,6 @@
 {
   "name": "package-version-updater",
-  "version": "1.1.17-rc.1",
+  "version": "v1.1.17-rc.1",
   "description": "更新package.json版本号",
   "bin": {
     "pvu": "bin/index.js"
@@ -34,6 +34,6 @@
   },
   "dependencies": {
     "commander": "^12.0.0",
-    "version-converter": "^1.1.0"
+    "semver": "^7.6.0"
   }
 }

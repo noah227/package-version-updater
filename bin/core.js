@@ -1,6 +1,5 @@
 const path = require("path")
 const fs = require("fs")
-const versionConverter = require("version-converter")
 
 /**
  *
@@ -13,7 +12,24 @@ const processValue = (v) => {
  * @param {{version: string, [index: string]: any}} pkg
  */
 const processVersion = ({version}) => {
-    return versionConverter.split(version)
+    const {
+        raw, major, minor, patch, prerelease
+    } = require("semver").parse(version)
+
+    let prereleaseCode, prereleaseVersion
+    if (prerelease.length) prereleaseCode = prerelease[0]
+    if (prerelease.length > 1) prereleaseVersion = prerelease[1]
+    return {
+        major, minor, patch,
+        prereleaseCode, prereleaseVersion
+    }
+}
+
+// const prevReg = /^([a-zA-Z]+-?)?/
+const prevReg = /^([a-zA-Z]+)?/
+const matchPrev = ({version}) => {
+    const match = prevReg.exec(version)
+    if (match) return match[0]
 }
 
 /**
@@ -73,9 +89,11 @@ module.exports = (options) => {
             ].join(".")
         }
     }
+    const prev = matchPrev(pkg)
+    if (prev) _version = prev + _version
     let updateMsg = `Version updated: ${pkg.version} -> ${_version}`
     if (preview) {
-        return console.log("Preview Mode:", updateMsg)
+        return console.log("[Preview Mode] ", updateMsg)
     } else console.log(updateMsg)
     pkg.version = _version
     // 执行文件操作
