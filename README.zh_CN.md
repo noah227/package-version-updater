@@ -2,7 +2,7 @@
 
 > 更新package.json版本号
 >
-> 版本号以`Major.Minor.Patch`或者`Major.Minor.Patch-PreRelease.x`格式书写 
+> 版本号以[semver](https://semver.org/)规范的格式书写 
 
 > [EN](./README.md)
 
@@ -45,7 +45,3 @@ pvu --patch
 ```
 
 > e.g. 1.2.0 -> 1.2.1
-
-## more
-
-- alpha ? 

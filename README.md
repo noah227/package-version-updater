@@ -2,7 +2,7 @@
 
 > Update version of package.json
 >
-> Version written in format `Major.Minor.Patch` or `Major.Minor.Patch-PreRelease.x`
+> Version written as [semver](https://semver.org/) described
 
 > [中文文档](./README.zh_CN.md)
 
@@ -45,7 +45,3 @@ pvu --patch
 ```
 
 > e.g. 1.2.0 -> 1.2.1
-
-## more
-
-- alpha ? 
