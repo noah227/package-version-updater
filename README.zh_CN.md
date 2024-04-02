@@ -44,6 +44,8 @@ pvu --minor
 pvu --patch
 ```
 
+> e.g. 1.2.0 -> 1.2.1
+
 ### 关于区域语言指定
 
 > 运行时语言自动检测
@@ -52,5 +54,3 @@ pvu --patch
 ```shell
 pvu --locale <locale>
 ```
-
-> e.g. 1.2.0 -> 1.2.1

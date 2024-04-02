@@ -44,13 +44,15 @@ pvu --minor
 pvu --patch
 ```
 
+> e.g. 1.2.0 -> 1.2.1
+
 ### About Locale
 
 > Locale will be automatically detected
+> 
 > But you can specify it using `--locale`
 
 ```shell
 pvu --locale <locale>
 ```
 
-> e.g. 1.2.0 -> 1.2.1
