@@ -1,6 +1,6 @@
 const path = require("path")
 const fs = require("fs")
-const {list: templateList} = require("./template.json");
+
 
 /**
  *
