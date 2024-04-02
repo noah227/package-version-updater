@@ -137,7 +137,7 @@ module.exports = (options) => {
     if (options.autoCommit) {
         // 简易的判断
         if (fs.existsSync(path.resolve(cwd, ".git"))) {
-            const cmd = `git add package.json & git commit -m "${options.commitPrefix}: update version(${version} -> ${_version})"`
+            const cmd = `git add package.json & git commit -m "${options.commitPrefix}: ${updateMsg}"`
             require("child_process").exec(cmd, (error, stdout, stderr) => {
                 if (error) {
                     console.error(error)
