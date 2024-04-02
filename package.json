@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "commander": "^12.0.0",
+    "detect-json-indent": "^0.0.3",
     "os-locale-ex": "^1.1.0",
     "semver": "^7.6.0"
   }

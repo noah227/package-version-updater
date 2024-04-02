@@ -1,6 +1,6 @@
 const path = require("path")
 const fs = require("fs")
-
+const detectJsonIndent = require("detect-json-indent")
 
 /**
  *
@@ -61,6 +61,7 @@ const renderVersionMessage = (oldVersion, newVersion, locale = null) => {
     return matched.tpl.replaceAll("@oldVersion", oldVersion).replaceAll("@newVersion", newVersion)
 }
 
+
 /**
  *
  * @param { {
@@ -89,7 +90,8 @@ module.exports = (options) => {
     if (!fs.existsSync(pkgPath)) return console.error(`${pkgPath} does not exist`)
 
     // 处理要升级并更新pkg
-    const pkg = require(pkgPath)
+    const pkgContent = fs.readFileSync(pkgPath, {encoding: "utf8"})
+    const pkg = JSON.parse(pkgContent)
     let {major: M, minor: m, patch: p, prereleaseCode, prereleaseVersion} = processVersion(pkg)
     if (major) {
         M += major
@@ -130,7 +132,7 @@ module.exports = (options) => {
     } else console.log(updateMsg)
     pkg.version = _version
     // 执行文件操作
-    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2), {encoding: "utf8"})
+    fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, detectJsonIndent(pkgContent)), {encoding: "utf8"})
 
     // 处理自动commit
     if (options.autoCommit) {
