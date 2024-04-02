@@ -10,6 +10,7 @@
     "test:no-arg": "node ./bin/index.js",
     "test:major": "node ./bin/index.js --major",
     "test:preview": "node ./bin/index.js --major --preview",
+    "test:preview--locale-specified": "node ./bin/index.js --locale zh-CN --preview",
     "test:preview-patch": "node ./bin/index.js --patch --preview",
     "test:major-delta": "node ./bin/index.js --major 1",
     "test:minor-delta": "node ./bin/index.js --minor 1",
@@ -34,6 +35,7 @@
   },
   "dependencies": {
     "commander": "^12.0.0",
+    "os-locale-ex": "^1.1.0",
     "semver": "^7.6.0"
   }
 }

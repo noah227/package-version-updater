@@ -1,5 +1,6 @@
 const path = require("path")
 const fs = require("fs")
+const {list: templateList} = require("./template.json");
 
 /**
  *
@@ -33,11 +34,31 @@ const matchPrev = ({version}) => {
 }
 
 /**
+ * render localed version string
+ * @param oldVersion
+ * @param newVersion
+ * @param locale
+ * @return {string}
+ */
+const renderVersionMessage = (oldVersion, newVersion, locale = null) => {
+    const {osLocaleSync} = require("os-locale-ex")
+    const templateList = require("./template.json").list
+    locale = locale || osLocaleSync() || "en-US"
+    let matched = templateList.find(item => item.locale === locale)
+    if (!matched) {
+        console.warn(`Locale pattern [${locale}] not found in template, use en-US as default.`)
+        matched = templateList.find(item => item.locale === "en-US")
+    }
+    return matched.tpl.replaceAll("@oldVersion", oldVersion).replaceAll("@newVersion", newVersion)
+}
+
+/**
  *
  * @param { {
  *      major?: boolean | number, minor?: boolean | number, patch?: boolean | number,
  *      preRelease?: boolean | number,
  *      autoCommit?: boolean, commitPrefix?: string,
+ *      locale?: string,
  *      preview?: boolean
  * }} options
  */
@@ -91,7 +112,7 @@ module.exports = (options) => {
     }
     const prev = matchPrev(pkg)
     if (prev) _version = prev + _version
-    let updateMsg = `Version updated: ${pkg.version} -> ${_version}`
+    let updateMsg = renderVersionMessage(pkg.version, _version, options.locale)
     if (preview) {
         return console.log("[Preview Mode] ", updateMsg)
     } else console.log(updateMsg)

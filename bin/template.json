@@ -1,0 +1,13 @@
+{
+    "$schema": "./template.schema.json",
+    "list": [
+        {
+            "locale": "zh-CN",
+            "tpl": "更新版本（@oldVersion -> @newVersion）"
+        },
+        {
+            "locale": "en-US",
+            "tpl": "Update Version(@oldVersion -> @newVersion)"
+        }
+    ]
+}

@@ -20,6 +20,7 @@ program
     .option("-pr, --pre-release [delta]", "update Pre-Release (alpha/beta/rc/...)", parseInt, 0)
     .option("-ac, --auto-commit", "auto commit package.json if it's a git repo")
     .option("-cp, --commit-prefix [commit-prefix]", "commit prefix", "chore")
+    .option("--locale [locale]", "specify locale")
     .option("--preview", "output result in console only, no actual operation to package.json")
     .action((options) => {
         require("./core")(options)
