@@ -16,10 +16,20 @@ const processVersion = ({version}) => {
     const {
         raw, major, minor, patch, prerelease
     } = require("semver").parse(version)
-
     let prereleaseCode, prereleaseVersion
-    if (prerelease.length) prereleaseCode = prerelease[0]
-    if (prerelease.length > 1) prereleaseVersion = prerelease[1]
+    const l = prerelease.length
+    if(l) {
+        const p1 = prerelease[0]
+        if(l === 1) {
+            if(isNaN(parseInt(p1))) {}
+            else prereleaseVersion = p1
+        }
+        else if(l > 1) {
+            const p2 = prerelease[1]
+            prereleaseCode = p1
+            prereleaseVersion = p2
+        }
+    }
     return {
         major, minor, patch,
         prereleaseCode, prereleaseVersion
@@ -98,7 +108,10 @@ module.exports = (options) => {
     let _version = [M, m, p].join(".")
     // 重置prerelease
     if (major || minor || patch) {
-        _version += "-" + [prereleaseCode, 0].join(".")
+        const _ = []
+        if(prereleaseCode) _.push(prereleaseCode)
+        if(prereleaseVersion) _.push(0)
+        if(_.length) _version += "-" + _.join(".")
     }
     // 处理prerelease
     else if (preRelease) {
