@@ -2,7 +2,7 @@
 
 > 更新package.json版本号
 >
-> 版本号以[semver](https://semver.org/)规范的格式书写 
+> 版本号以[semver](https://semver.org/)规范的格式书写
 
 > [EN](./README.md)
 
@@ -42,6 +42,15 @@ pvu --minor
 
 ```
 pvu --patch
+```
+
+### 关于区域语言指定
+
+> 运行时语言自动检测
+> 当然也可以使用`--locale`进行指定
+
+```shell
+pvu --locale <locale>
 ```
 
 > e.g. 1.2.0 -> 1.2.1
